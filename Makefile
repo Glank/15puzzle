@@ -1,5 +1,5 @@
 CFLAGS=-Wall -g
-OBJS=zobrist.o board.o hash.o
+OBJS=zobrist.o board.o hash.o search.o
 
 all:	15puzzle
 
@@ -18,10 +18,13 @@ board.o: constants.h board.h zobrist.h board.c
 hash.o: constants.h board.h zobrist.h hash.h hash.c
 	$(CC) $(CFLAGS) -c hash.c
 
+search.o: constants.h board.h zobrist.h hash.h search.h search.c
+	$(CC) $(CFLAGS) -c search.c
+
 test: $(OBJS) constants.h test.c
 	$(CC) $(CFLAGS) -c test.c
 	$(CC) $(CFLAGS) $(OBJS) test.o -o 15puzzle_test
-	./15puzzle_test
+	valgrind --leak-check=full ./15puzzle_test
 
 clean:
 	rm -f *.o 15puzzle 15puzzle_test
