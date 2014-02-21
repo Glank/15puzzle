@@ -116,7 +116,7 @@ void printBoard(const Board_t* board){
     int r,c;
     for(r=0; r<BOARD_SIZE; r++){
         for(c=0; c<BOARD_SIZE; c++){
-            printf("%d ", (int)(*board).squares[r][c]);
+            printf("%d\t", (int)(*board).squares[r][c]);
         }
         printf("\n");
     }

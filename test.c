@@ -92,14 +92,60 @@ void test_search3(){
     init_zobrist();
     srand(time(NULL));
     Board_t* goal = newBoard();
-    HashTable_t* visited = newHashTable(1);
+    HashTable_t* visited = newHashTable(32);
     Board_t* end = cloneBoard(goal);
-    scramble_times(end, 20);
+    scramble_times(end, 10000);
     put(visited, end);
     SearchNode_t* root = newSearchNode(end, 0, NULL);
-    SearchNode_t* result = idf_search(root, goal, visited, 10);
-    printf("Results:\n");
-    printSearchNode(result);
+    SearchNode_t* result = idf_search(root, goal, visited, 30);
+    if(result!=NULL){
+        printf("Results:\n");
+        printSearchNode(result);
+    }
+
+    deleteSearchNode(root, visited);
+    assert(TOTAL_SEARCH_NODES==0);
+    assert(TOTAL_HASH_NODES==0);
+    deleteHashTable(visited);
+    deleteBoard(goal);
+}
+
+void test_search4(){
+    init_zobrist();
+    srand(time(NULL));
+    Board_t* goal = newBoard();
+    HashTable_t* visited = newHashTable(32);
+    Board_t* end = cloneBoard(goal);
+    scramble_times(end, 10);
+    put(visited, end);
+    SearchNode_t* root = newSearchNode(end, 0, NULL);
+    SearchNode_t* result = astar_search(root, goal, visited, 10);
+    if(result!=NULL){
+        printf("Results:\n");
+        printSearchNode(result);
+    }
+
+    deleteSearchNode(root, visited);
+    assert(TOTAL_SEARCH_NODES==0);
+    assert(TOTAL_HASH_NODES==0);
+    deleteHashTable(visited);
+    deleteBoard(goal);
+}
+
+void test_search5(){
+    init_zobrist();
+    srand(time(NULL));
+    Board_t* goal = newBoard();
+    HashTable_t* visited = newHashTable(64);
+    Board_t* end = cloneBoard(goal);
+    scramble_times(end, 100);
+    put(visited, end);
+    SearchNode_t* root = newSearchNode(end, 0, NULL);
+    SearchNode_t* result = iastar_search(root, goal, visited, 100);
+    if(result!=NULL){
+        printf("Results:\n");
+        printSearchNode(result);
+    }
 
     deleteSearchNode(root, visited);
     assert(TOTAL_SEARCH_NODES==0);
@@ -113,7 +159,9 @@ int main(void){
     //test_hash_table();
     //test_search();
     //test_search2();
-    test_search3();
+    //test_search3();
+    //test_search4();
+    test_search5();
     printf("All Tests Passed.\n");
     return 0;
 }
