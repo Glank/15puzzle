@@ -18,7 +18,7 @@ void test_board(){
         printf("Testing Board...\n");
     init_zobrist();
     Board_t* a = newBoard();
-    assert((*a).squares[1][1] == 4);
+    assert((*a).squares[1][1] == 5);
     deleteBoard(a);
     if(verbose)
         printf("Board Passed.\n");
@@ -94,7 +94,7 @@ void test_search3(){
     Board_t* goal = newBoard();
     HashTable_t* visited = newHashTable(32);
     Board_t* end = cloneBoard(goal);
-    scramble_times(end, 10000);
+    scramble_times(end, 10);
     put(visited, end);
     SearchNode_t* root = newSearchNode(end, 0, NULL);
     SearchNode_t* result = idf_search(root, goal, visited, 30);
@@ -155,13 +155,13 @@ void test_search5(){
 }
 
 int main(void){
-    //test_board();
-    //test_hash_table();
-    //test_search();
-    //test_search2();
-    //test_search3();
+    test_board();
+    test_hash_table();
+    test_search();
+    test_search2();
+    test_search3();
     //test_search4();
-    test_search5();
+    //test_search5();
     printf("All Tests Passed.\n");
     return 0;
 }

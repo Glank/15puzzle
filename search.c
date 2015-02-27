@@ -157,7 +157,7 @@ SearchNode_t* astar_search(SearchNode_t* start, Board_t* goal,
     SearchNode_t* result = NULL;
     int order[start->nChildren];
     int evals[start->nChildren];
-    int i,j,best,temp;
+    int i,j,best;
     for(i=0; i<start->nChildren; i++){
         order[i] = i;
         evals[i] = evaluate(start->children[i]->state);
